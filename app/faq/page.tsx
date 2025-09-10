@@ -80,7 +80,7 @@ export default async function FAQPage() {
             <div className="max-w-4xl mx-auto">
               {groupedFAQs && Object.keys(groupedFAQs).length > 0 ? (
                 <div className="space-y-12">
-                  {Object.entries(groupedFAQs).map(([category, questions]) => (
+                  {(Object.entries(groupedFAQs) as [string, FAQ[]][]).map(([category, questions]) => (
                     <div key={category}>
                       <h2 className="text-2xl font-bold text-gray-900 mb-6">
                         {categoryLabels[category] || category}
