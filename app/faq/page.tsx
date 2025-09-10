@@ -26,7 +26,17 @@ export default async function FAQPage() {
   const faqs = await getFAQs()
   
   // Group FAQs by category
-  const groupedFAQs = faqs?.reduce((acc: Record<string, any[]>, faq) => {
+  interface FAQ {
+    _id: string;
+    question: string;
+    slug: { current: string };
+    shortAnswer: string;
+    category?: string;
+    helpful?: number;
+    keywords?: string[];
+  }
+
+  const groupedFAQs = faqs?.reduce((acc: Record<string, FAQ[]>, faq: FAQ) => {
     const category = faq.category || 'general'
     if (!acc[category]) acc[category] = []
     acc[category].push(faq)
@@ -76,7 +86,7 @@ export default async function FAQPage() {
                         {categoryLabels[category] || category}
                       </h2>
                       <div className="space-y-4">
-                        {(questions as any[]).map((faq) => (
+                        {questions.map((faq) => (
                           <div key={faq._id} className="bg-gray-50 p-6 rounded-lg">
                             <h3 className="text-lg font-semibold text-gray-900 mb-2">
                               {faq.question}
