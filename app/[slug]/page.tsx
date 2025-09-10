@@ -10,11 +10,6 @@ interface PageProps {
 
 async function getArticleContent(slug: string) {
   try {
-    // Convert slug to title format for searching
-    const titleFromSlug = slug
-      .split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ')
     
     // Try multiple queries to find the content
     // 1. First try by slug field
@@ -122,9 +117,9 @@ export default async function ArticlePage({ params }: PageProps) {
   const pageTitle = content.title || content.pageTitle || 'Article'
   // Ensure content is a string
   const pageContent = typeof content.content === 'string' ? content.content : 
-                     (Array.isArray(content.content) ? content.content.map((block: any) => 
+                     (Array.isArray(content.content) ? content.content.map((block: { _type: string; children?: Array<{ text: string }> }) => 
                        block._type === 'block' && block.children ? 
-                       block.children.map((child: any) => child.text).join('') : '').join('\n\n') : 
+                       block.children.map((child: { text: string }) => child.text).join('') : '').join('\n\n') : 
                      '')
   const author = content.author?.name || 'TheChief.quest Team'
   const publishDate = content.publishedAt ? new Date(content.publishedAt).toLocaleDateString('en-GB', {
