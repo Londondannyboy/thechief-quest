@@ -94,7 +94,7 @@ export default async function FAQPage() {
                             <p className="text-gray-600">
                               {faq.shortAnswer}
                             </p>
-                            {faq.helpful > 0 && (
+                            {faq.helpful && faq.helpful > 0 && (
                               <div className="mt-3 text-sm text-gray-500">
                                 {faq.helpful} people found this helpful
                               </div>
