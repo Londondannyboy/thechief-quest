@@ -1,0 +1,1766 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 30
+              },
+              {
+                "flag": "max",
+                "constraint": 70
+              },
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "SEO title with primary keyword (max 70 chars) - Format: [Keyword] - [Secondary] | TheChief",
+        "name": "metaTitle",
+        "type": "string",
+        "title": "Meta Title (SEO)"
+      },
+      {
+        "options": {
+          "source": "metaTitle",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug",
+        "title": "URL Slug"
+      },
+      {
+        "rows": 3,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 120
+              },
+              {
+                "flag": "max",
+                "constraint": 200
+              },
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "SEO description with keyword in first 100 chars (max 200 chars)",
+        "name": "metaDescription",
+        "type": "text",
+        "title": "Meta Description (SEO)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "H1 heading for the page (can be different from meta title)",
+        "name": "pageTitle",
+        "type": "string",
+        "title": "Page Title (H1)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "max",
+                "constraint": 150
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Answer in 150 chars for AI snippets",
+        "name": "tldr",
+        "type": "string",
+        "title": "Quick Answer (TLDR)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "The main question this content answers",
+        "name": "question",
+        "type": "string",
+        "title": "Primary Question"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "London, UK",
+              "value": "london"
+            },
+            {
+              "title": "Manchester, UK",
+              "value": "manchester"
+            },
+            {
+              "title": "Birmingham, UK",
+              "value": "birmingham"
+            },
+            {
+              "title": "Edinburgh, UK",
+              "value": "edinburgh"
+            },
+            {
+              "title": "Glasgow, UK",
+              "value": "glasgow"
+            },
+            {
+              "title": "Leeds, UK",
+              "value": "leeds"
+            },
+            {
+              "title": "Bristol, UK",
+              "value": "bristol"
+            },
+            {
+              "title": "Cardiff, UK",
+              "value": "cardiff"
+            },
+            {
+              "title": "Liverpool, UK",
+              "value": "liverpool"
+            },
+            {
+              "title": "Newcastle, UK",
+              "value": "newcastle"
+            },
+            {
+              "title": "Sheffield, UK",
+              "value": "sheffield"
+            },
+            {
+              "title": "Zurich, Switzerland",
+              "value": "zurich"
+            },
+            {
+              "title": "Geneva, Switzerland",
+              "value": "geneva"
+            },
+            {
+              "title": "Luxembourg City, Luxembourg",
+              "value": "luxembourg"
+            },
+            {
+              "title": "Dubai, UAE",
+              "value": "dubai"
+            },
+            {
+              "title": "Abu Dhabi, UAE",
+              "value": "abu-dhabi"
+            },
+            {
+              "title": "Doha, Qatar",
+              "value": "doha"
+            },
+            {
+              "title": "Riyadh, Saudi Arabia",
+              "value": "riyadh"
+            },
+            {
+              "title": "Kuwait City, Kuwait",
+              "value": "kuwait-city"
+            },
+            {
+              "title": "Manama, Bahrain",
+              "value": "manama"
+            }
+          ]
+        },
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "United Kingdom",
+              "value": "uk"
+            },
+            {
+              "title": "Europe",
+              "value": "europe"
+            },
+            {
+              "title": "Middle East",
+              "value": "middle-east"
+            }
+          ]
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "uk",
+                  "europe",
+                  "middle-east"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Geographic region for filtering",
+        "name": "region",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Private Equity",
+              "value": "private-equity"
+            },
+            {
+              "title": "Hedge Fund",
+              "value": "hedge-fund"
+            },
+            {
+              "title": "Venture Capital",
+              "value": "venture-capital"
+            },
+            {
+              "title": "Startup",
+              "value": "startup"
+            },
+            {
+              "title": "Utilities",
+              "value": "utilities"
+            },
+            {
+              "title": "Telecoms",
+              "value": "telecoms"
+            }
+          ]
+        },
+        "name": "industry",
+        "type": "string"
+      },
+      {
+        "name": "content",
+        "type": "portableText",
+        "title": "Main Content"
+      },
+      {
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "min",
+                    "constraint": 0
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "min",
+            "type": "number",
+            "title": "Minimum Salary"
+          },
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "min",
+                    "constraint": 0
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "max",
+            "type": "number",
+            "title": "Maximum Salary"
+          },
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "min",
+                    "constraint": 0
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "average",
+            "type": "number",
+            "title": "Average Salary"
+          },
+          {
+            "initialValue": "GBP",
+            "options": {
+              "list": [
+                "GBP",
+                "EUR",
+                "USD"
+              ]
+            },
+            "name": "currency",
+            "type": "string"
+          },
+          {
+            "name": "lastUpdated",
+            "type": "date"
+          },
+          {
+            "name": "dataSource",
+            "type": "string"
+          }
+        ],
+        "name": "salaryData",
+        "type": "object",
+        "title": "Salary Information"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "to": [
+          {
+            "type": "author"
+          }
+        ],
+        "name": "author",
+        "type": "reference"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "publishedAt",
+        "type": "datetime",
+        "title": "Published Date"
+      },
+      {
+        "name": "lastModified",
+        "type": "datetime"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "chiefOfStaff"
+              },
+              {
+                "type": "recruitmentAgency"
+              },
+              {
+                "type": "faqContent"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to chief of staff content, recruitment agency or faq content"
+          }
+        ],
+        "name": "relatedContent",
+        "type": "array",
+        "title": "Related Pages"
+      },
+      {
+        "readOnly": true,
+        "name": "seoScore",
+        "type": "seoScore",
+        "title": "SEO Score"
+      }
+    ],
+    "name": "chiefOfStaff",
+    "type": "document",
+    "title": "Chief of Staff Content"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string",
+        "title": "Agency Name"
+      },
+      {
+        "options": {
+          "source": "name",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug",
+        "title": "URL Slug"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "logo",
+        "type": "image"
+      },
+      {
+        "rows": 4,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 100
+              },
+              {
+                "flag": "max",
+                "constraint": 500
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "description",
+        "type": "text",
+        "title": "Agency Description"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Chief of Staff",
+              "value": "chief-of-staff"
+            },
+            {
+              "title": "Executive Assistant",
+              "value": "executive-assistant"
+            },
+            {
+              "title": "C-Suite",
+              "value": "c-suite"
+            },
+            {
+              "title": "Board Advisory",
+              "value": "board-advisory"
+            },
+            {
+              "title": "Interim Management",
+              "value": "interim"
+            }
+          ]
+        },
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "specializations",
+        "type": "array"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Private Equity",
+              "value": "private-equity"
+            },
+            {
+              "title": "Hedge Funds",
+              "value": "hedge-funds"
+            },
+            {
+              "title": "Technology",
+              "value": "technology"
+            },
+            {
+              "title": "Financial Services",
+              "value": "financial-services"
+            },
+            {
+              "title": "Healthcare",
+              "value": "healthcare"
+            },
+            {
+              "title": "Retail",
+              "value": "retail"
+            }
+          ]
+        },
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "industries",
+        "type": "array",
+        "title": "Industry Focus"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "city",
+                "type": "string"
+              },
+              {
+                "rows": 2,
+                "name": "address",
+                "type": "text"
+              },
+              {
+                "name": "phone",
+                "type": "string"
+              },
+              {
+                "name": "email",
+                "type": "string"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "locations",
+        "type": "array",
+        "title": "Office Locations"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 0
+              },
+              {
+                "flag": "max",
+                "constraint": 5
+              },
+              {
+                "flag": "precision",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "rating",
+        "type": "number"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 0
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "reviewCount",
+        "type": "number",
+        "title": "Number of Reviews"
+      },
+      {
+        "fields": [
+          {
+            "description": "e.g., \"20-30% of first year salary\"",
+            "name": "permanent",
+            "type": "string",
+            "title": "Permanent Placement Fee"
+          },
+          {
+            "name": "retained",
+            "type": "string",
+            "title": "Retained Search Fee"
+          },
+          {
+            "name": "contingency",
+            "type": "string",
+            "title": "Contingency Fee"
+          },
+          {
+            "description": "e.g., \"90 days\"",
+            "name": "guarantee",
+            "type": "string",
+            "title": "Guarantee Period"
+          }
+        ],
+        "name": "fees",
+        "type": "object",
+        "title": "Fee Structure"
+      },
+      {
+        "fields": [
+          {
+            "name": "chiefOfStaff",
+            "type": "number",
+            "title": "Chief of Staff Placements"
+          },
+          {
+            "name": "total",
+            "type": "number",
+            "title": "Total Placements"
+          },
+          {
+            "name": "averageSalary",
+            "type": "number",
+            "title": "Average Placement Salary"
+          }
+        ],
+        "name": "placements",
+        "type": "object",
+        "title": "Annual Placements"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "rows": 3,
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "quote",
+                "type": "text"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "author",
+                "type": "string"
+              },
+              {
+                "name": "role",
+                "type": "string"
+              },
+              {
+                "name": "company",
+                "type": "string"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "testimonials",
+        "type": "array"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "website",
+        "type": "url"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "linkedin",
+        "type": "url",
+        "title": "LinkedIn Profile"
+      },
+      {
+        "description": "Has this agency been verified by our team?",
+        "name": "verified",
+        "type": "boolean",
+        "title": "Verified Agency"
+      }
+    ],
+    "name": "recruitmentAgency",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Job Title"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug",
+        "title": "URL Slug"
+      },
+      {
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "presence",
+                    "constraint": "required"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "name",
+            "type": "string",
+            "title": "Company Name"
+          },
+          {
+            "name": "logo",
+            "type": "image",
+            "title": "Company Logo"
+          },
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "uri",
+                    "constraint": {
+                      "options": {
+                        "scheme": [
+                          "/^http$/",
+                          "/^https$/"
+                        ],
+                        "allowRelative": false,
+                        "relativeOnly": false,
+                        "allowCredentials": false
+                      }
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "website",
+            "type": "url",
+            "title": "Company Website"
+          },
+          {
+            "options": {
+              "list": [
+                {
+                  "title": "1-10",
+                  "value": "startup"
+                },
+                {
+                  "title": "11-50",
+                  "value": "small"
+                },
+                {
+                  "title": "51-200",
+                  "value": "medium"
+                },
+                {
+                  "title": "201-1000",
+                  "value": "large"
+                },
+                {
+                  "title": "1000+",
+                  "value": "enterprise"
+                }
+              ]
+            },
+            "name": "size",
+            "type": "string",
+            "title": "Company Size"
+          }
+        ],
+        "name": "company",
+        "type": "object"
+      },
+      {
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "presence",
+                    "constraint": "required"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "city",
+            "type": "string"
+          },
+          {
+            "options": {
+              "list": [
+                {
+                  "title": "On-site",
+                  "value": "onsite"
+                },
+                {
+                  "title": "Hybrid",
+                  "value": "hybrid"
+                },
+                {
+                  "title": "Fully Remote",
+                  "value": "remote"
+                }
+              ]
+            },
+            "name": "remote",
+            "type": "string",
+            "title": "Remote Options"
+          }
+        ],
+        "name": "location",
+        "type": "object"
+      },
+      {
+        "fields": [
+          {
+            "name": "min",
+            "type": "number",
+            "title": "Minimum"
+          },
+          {
+            "name": "max",
+            "type": "number",
+            "title": "Maximum"
+          },
+          {
+            "initialValue": "GBP",
+            "name": "currency",
+            "type": "string"
+          },
+          {
+            "options": {
+              "list": [
+                "annual",
+                "monthly",
+                "daily",
+                "hourly"
+              ]
+            },
+            "name": "period",
+            "type": "string"
+          }
+        ],
+        "name": "salary",
+        "type": "object"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "description",
+        "type": "portableText",
+        "title": "Job Description"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "requirements",
+        "type": "array"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "benefits",
+        "type": "array"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "applicationUrl",
+        "type": "url",
+        "title": "Application URL"
+      },
+      {
+        "name": "applicationEmail",
+        "type": "string"
+      },
+      {
+        "description": "Where this job was sourced from",
+        "name": "source",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "sourceUrl",
+        "type": "url",
+        "title": "Source URL"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "postedDate",
+        "type": "datetime"
+      },
+      {
+        "name": "expiryDate",
+        "type": "datetime"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Active",
+              "value": "active"
+            },
+            {
+              "title": "Expired",
+              "value": "expired"
+            },
+            {
+              "title": "Filled",
+              "value": "filled"
+            },
+            {
+              "title": "On Hold",
+              "value": "on-hold"
+            }
+          ]
+        },
+        "initialValue": "active",
+        "name": "status",
+        "type": "string"
+      }
+    ],
+    "name": "jobListing",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "question",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "question",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug",
+        "title": "URL Slug"
+      },
+      {
+        "rows": 3,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "max",
+                "constraint": 200
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Brief answer for featured snippets (150-200 chars)",
+        "name": "shortAnswer",
+        "type": "text"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "detailedAnswer",
+        "type": "portableText"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "General",
+              "value": "general"
+            },
+            {
+              "title": "Career",
+              "value": "career"
+            },
+            {
+              "title": "Salary",
+              "value": "salary"
+            },
+            {
+              "title": "Skills",
+              "value": "skills"
+            },
+            {
+              "title": "Application",
+              "value": "application"
+            },
+            {
+              "title": "Industry",
+              "value": "industry"
+            }
+          ]
+        },
+        "name": "category",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "faqContent"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to faq content"
+          }
+        ],
+        "name": "relatedQuestions",
+        "type": "array"
+      },
+      {
+        "options": {
+          "layout": "tags"
+        },
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "keywords",
+        "type": "array"
+      },
+      {
+        "initialValue": 0,
+        "name": "helpful",
+        "type": "number",
+        "title": "Marked as Helpful"
+      },
+      {
+        "initialValue": 0,
+        "name": "notHelpful",
+        "type": "number",
+        "title": "Marked as Not Helpful"
+      }
+    ],
+    "name": "faqContent",
+    "type": "document",
+    "title": "FAQ Content"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "name",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug",
+        "title": "URL Slug"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image",
+        "title": "Profile Image"
+      },
+      {
+        "rows": 4,
+        "name": "bio",
+        "type": "text",
+        "title": "Biography"
+      },
+      {
+        "description": "e.g., \"Former Chief of Staff, 10 years recruitment\"",
+        "name": "credentials",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "linkedin",
+        "type": "url",
+        "title": "LinkedIn Profile"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "twitter",
+        "type": "url",
+        "title": "Twitter/X Profile"
+      }
+    ],
+    "name": "author",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "e.g., \"Featured Locations\", \"Top Industries\"",
+        "name": "title",
+        "type": "string",
+        "title": "Section Title"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 50
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Unique identifier for this section (e.g., homepage-hero)",
+        "name": "sectionKey",
+        "type": "slug"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 10
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Select and order the content to feature",
+        "of": [
+          {
+            "to": [
+              {
+                "type": "chiefOfStaff"
+              },
+              {
+                "type": "recruitmentAgency"
+              },
+              {
+                "type": "jobListing"
+              },
+              {
+                "type": "faqContent"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to chief of staff content, recruitment agency, job listing or faq content"
+          }
+        ],
+        "name": "featuredItems",
+        "type": "array"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Grid",
+              "value": "grid"
+            },
+            {
+              "title": "List",
+              "value": "list"
+            },
+            {
+              "title": "Carousel",
+              "value": "carousel"
+            },
+            {
+              "title": "Hero",
+              "value": "hero"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "grid",
+        "name": "displayType",
+        "type": "string"
+      },
+      {
+        "initialValue": true,
+        "description": "Toggle to show/hide this featured section",
+        "name": "isActive",
+        "type": "boolean",
+        "title": "Active"
+      },
+      {
+        "initialValue": 0,
+        "description": "Lower numbers appear first",
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "featuredContent",
+    "type": "document"
+  },
+  {
+    "of": [
+      {
+        "marks": {
+          "annotations": [
+            {
+              "fields": [
+                {
+                  "to": [
+                    {
+                      "type": "chiefOfStaff"
+                    },
+                    {
+                      "type": "recruitmentAgency"
+                    },
+                    {
+                      "type": "faqContent"
+                    }
+                  ],
+                  "name": "reference",
+                  "type": "reference"
+                }
+              ],
+              "name": "internalLink",
+              "type": "object"
+            },
+            {
+              "fields": [
+                {
+                  "validation": [
+                    {
+                      "rules": [
+                        {
+                          "flag": "uri",
+                          "constraint": {
+                            "options": {
+                              "scheme": [
+                                "/^http$/",
+                                "/^https$/"
+                              ],
+                              "allowRelative": false,
+                              "relativeOnly": false,
+                              "allowCredentials": false
+                            }
+                          }
+                        }
+                      ],
+                      "level": "error"
+                    }
+                  ],
+                  "name": "url",
+                  "type": "url",
+                  "title": "URL"
+                },
+                {
+                  "initialValue": true,
+                  "name": "newWindow",
+                  "type": "boolean",
+                  "title": "Open in New Window"
+                }
+              ],
+              "name": "externalLink",
+              "type": "object"
+            }
+          ],
+          "decorators": [
+            {
+              "value": "strong",
+              "title": "Strong"
+            },
+            {
+              "value": "em",
+              "title": "Emphasis"
+            },
+            {
+              "value": "code",
+              "title": "Code"
+            }
+          ]
+        },
+        "lists": [
+          {
+            "value": "bullet",
+            "title": "Bulleted list"
+          },
+          {
+            "value": "number",
+            "title": "Numbered list"
+          }
+        ],
+        "styles": [
+          {
+            "value": "normal",
+            "title": "Normal"
+          },
+          {
+            "value": "h2",
+            "title": "H2"
+          },
+          {
+            "value": "h3",
+            "title": "H3"
+          },
+          {
+            "value": "h4",
+            "title": "H4"
+          },
+          {
+            "value": "blockquote",
+            "title": "Quote"
+          }
+        ],
+        "of": [],
+        "type": "block"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "presence",
+                    "constraint": "required"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "alt",
+            "type": "string",
+            "title": "Alt Text"
+          },
+          {
+            "name": "caption",
+            "type": "string"
+          }
+        ],
+        "type": "image"
+      }
+    ],
+    "name": "portableText",
+    "type": "array",
+    "title": "Content"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 0
+              },
+              {
+                "flag": "max",
+                "constraint": 100
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "score",
+        "type": "number",
+        "title": "Overall Score"
+      },
+      {
+        "name": "hasKeywordInTitle",
+        "type": "boolean",
+        "title": "Keyword in Title"
+      },
+      {
+        "name": "hasKeywordInH1",
+        "type": "boolean",
+        "title": "Keyword in H1"
+      },
+      {
+        "name": "hasKeywordInContent",
+        "type": "boolean",
+        "title": "Keyword in Content"
+      },
+      {
+        "name": "hasBoldKeyword",
+        "type": "boolean",
+        "title": "Bold Keyword"
+      },
+      {
+        "name": "hasInternalLinks",
+        "type": "boolean"
+      },
+      {
+        "name": "wordCount",
+        "type": "number"
+      }
+    ],
+    "name": "seoScore",
+    "type": "object",
+    "title": "SEO Score"
+  }
+]

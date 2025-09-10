@@ -153,7 +153,7 @@ export default async function LocationPage({ params }: PageProps) {
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl font-bold text-gray-900 mb-8">Key Industries</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {pageData.industries.map((industry) => (
+                {pageData.industries.map((industry: string) => (
                   <Link
                     key={industry}
                     href={`/locations/${slug}/${industry.toLowerCase().replace(' ', '-')}`}
@@ -166,7 +166,7 @@ export default async function LocationPage({ params }: PageProps) {
               
               <h2 className="text-3xl font-bold text-gray-900 mb-8 mt-16">Top Employers</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {pageData.topEmployers.map((employer) => (
+                {pageData.topEmployers.map((employer: string) => (
                   <div key={employer} className="p-4 bg-gray-50 rounded-lg">
                     {employer}
                   </div>
