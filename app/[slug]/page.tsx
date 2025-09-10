@@ -9,26 +9,88 @@ interface PageProps {
 }
 
 async function getArticleContent(slug: string) {
-  // Query for featuredContent or chiefOfStaff content with this slug
-  const query = `*[_type in ["featuredContent", "chiefOfStaff"] && slug.current == $slug][0] {
-    _id,
-    _type,
-    title,
-    pageTitle,
-    metaTitle,
-    metaDescription,
-    slug,
-    content,
-    tldr,
-    publishedAt,
-    author->{
-      name,
-      role
+  try {
+    // Convert slug to title format for searching
+    const titleFromSlug = slug
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ')
+    
+    // Try multiple queries to find the content
+    // 1. First try by slug field
+    let query = `*[_type == "chiefOfStaff" && slug.current == $slug][0] {
+      _id,
+      _type,
+      title,
+      pageTitle,
+      metaTitle,
+      metaDescription,
+      slug,
+      content,
+      tldr,
+      publishedAt,
+      author->{
+        name,
+        role
+      }
+    }`
+    
+    let content = await client.fetch(query, { slug })
+    
+    // 2. Try by title match (case insensitive)
+    if (!content) {
+      query = `*[_type == "chiefOfStaff" && (
+        lower(metaTitle) match $searchPattern ||
+        lower(pageTitle) match $searchPattern ||
+        lower(title) match $searchPattern
+      )][0] {
+        _id,
+        _type,
+        title,
+        pageTitle,
+        metaTitle,
+        metaDescription,
+        slug,
+        content,
+        tldr,
+        publishedAt,
+        author->{
+          name,
+          role
+        }
+      }`
+      
+      // Create search pattern from slug
+      const searchPattern = slug.toLowerCase().replace(/-/g, '*')
+      content = await client.fetch(query, { searchPattern: `*${searchPattern}*` })
     }
-  }`
-  
-  const content = await client.fetch(query, { slug })
-  return content
+    
+    // 3. Try featuredContent by sectionKey
+    if (!content) {
+      query = `*[_type == "featuredContent" && sectionKey.current == $slug][0] {
+        _id,
+        _type,
+        title,
+        "pageTitle": title,
+        "metaTitle": title,
+        "metaDescription": title,
+        "slug": sectionKey,
+        "content": title,
+        "tldr": title,
+        publishedAt,
+        author->{
+          name,
+          role
+        }
+      }`
+      content = await client.fetch(query, { slug })
+    }
+    
+    return content
+  } catch (error) {
+    console.error('Error fetching article content:', error)
+    return null
+  }
 }
 
 export async function generateMetadata({ params }: PageProps) {
@@ -58,7 +120,12 @@ export default async function ArticlePage({ params }: PageProps) {
   
   // Format the content for display
   const pageTitle = content.title || content.pageTitle || 'Article'
-  const pageContent = content.content || ''
+  // Ensure content is a string
+  const pageContent = typeof content.content === 'string' ? content.content : 
+                     (Array.isArray(content.content) ? content.content.map((block: any) => 
+                       block._type === 'block' && block.children ? 
+                       block.children.map((child: any) => child.text).join('') : '').join('\n\n') : 
+                     '')
   const author = content.author?.name || 'TheChief.quest Team'
   const publishDate = content.publishedAt ? new Date(content.publishedAt).toLocaleDateString('en-GB', {
     year: 'numeric',
