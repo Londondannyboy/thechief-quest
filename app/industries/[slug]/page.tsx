@@ -3,6 +3,9 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
 
+// Revalidate every 60 seconds for fresh content
+export const revalidate = 60
+
 interface PageProps {
   params: Promise<{ slug: string }>
 }

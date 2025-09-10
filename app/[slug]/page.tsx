@@ -4,6 +4,11 @@ import { client } from '@/lib/sanity.client'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
+// Revalidate every 60 seconds (1 minute)
+// This means the page will be regenerated at most once per minute
+// when a request comes in
+export const revalidate = 60
+
 interface PageProps {
   params: Promise<{ slug: string }>
 }

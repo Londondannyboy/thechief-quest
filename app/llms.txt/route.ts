@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server'
 
+// Revalidate every 60 seconds for fresh content
+export const revalidate = 60
+
 export async function GET() {
   const llmsTxt = `# TheChief.quest - AI-Readable Content
 
