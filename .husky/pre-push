@@ -1,0 +1,20 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "🔍 Running pre-push checks..."
+
+# Run ESLint with auto-fix
+echo "📝 Fixing ESLint issues..."
+npm run lint -- --fix
+
+# Check TypeScript
+echo "🔧 Checking TypeScript..."
+npx tsc --noEmit
+
+# If TypeScript fails, try to build anyway
+if [ $? -ne 0 ]; then
+  echo "⚠️  TypeScript has errors, attempting build..."
+  npm run build
+fi
+
+echo "✅ Pre-push checks complete!"

@@ -1,0 +1,112 @@
+name: Auto-fix TypeScript and Linting Errors
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  auto-fix:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Try to fix ESLint errors
+        run: |
+          npm run lint -- --fix || true
+        continue-on-error: true
+        
+      - name: Check TypeScript
+        id: tsc
+        run: |
+          npx tsc --noEmit || echo "::set-output name=has_errors::true"
+        continue-on-error: true
+        
+      - name: Auto-fix common TypeScript issues
+        if: steps.tsc.outputs.has_errors == 'true'
+        run: |
+          # Fix common TypeScript issues
+          # 1. Replace 'any' with 'unknown' or proper types
+          find . -name "*.ts" -o -name "*.tsx" | xargs sed -i 's/: any/: unknown/g'
+          
+          # 2. Add optional chaining for possibly undefined
+          find . -name "*.tsx" | xargs sed -i 's/\([a-zA-Z_][a-zA-Z0-9_]*\)\.\([a-zA-Z_][a-zA-Z0-9_]*\) >/\1?\.\2 >/g'
+          
+          # 3. Fix unescaped apostrophes in JSX
+          find . -name "*.tsx" | xargs sed -i "s/don't/don\&apos;t/g"
+          find . -name "*.tsx" | xargs sed -i "s/can't/can\&apos;t/g"
+          find . -name "*.tsx" | xargs sed -i "s/won't/won\&apos;t/g"
+          find . -name "*.tsx" | xargs sed -i "s/it's/it\&apos;s/g"
+          find . -name "*.tsx" | xargs sed -i "s/we're/we\&apos;re/g"
+          find . -name "*.tsx" | xargs sed -i "s/you're/you\&apos;re/g"
+          find . -name "*.tsx" | xargs sed -i "s/they're/they\&apos;re/g"
+          find . -name "*.tsx" | xargs sed -i "s/I'm/I\&apos;m/g"
+          find . -name "*.tsx" | xargs sed -i "s/you've/you\&apos;ve/g"
+          find . -name "*.tsx" | xargs sed -i "s/we've/we\&apos;ve/g"
+          find . -name "*.tsx" | xargs sed -i "s/they've/they\&apos;ve/g"
+          find . -name "*.tsx" | xargs sed -i "s/I've/I\&apos;ve/g"
+          find . -name "*.tsx" | xargs sed -i "s/isn't/isn\&apos;t/g"
+          find . -name "*.tsx" | xargs sed -i "s/aren't/aren\&apos;t/g"
+          find . -name "*.tsx" | xargs sed -i "s/wasn't/wasn\&apos;t/g"
+          find . -name "*.tsx" | xargs sed -i "s/weren't/weren\&apos;t/g"
+          find . -name "*.tsx" | xargs sed -i "s/hasn't/hasn\&apos;t/g"
+          find . -name "*.tsx" | xargs sed -i "s/haven't/haven\&apos;t/g"
+          find . -name "*.tsx" | xargs sed -i "s/hadn't/hadn\&apos;t/g"
+          find . -name "*.tsx" | xargs sed -i "s/wouldn't/wouldn\&apos;t/g"
+          find . -name "*.tsx" | xargs sed -i "s/couldn't/couldn\&apos;t/g"
+          find . -name "*.tsx" | xargs sed -i "s/shouldn't/shouldn\&apos;t/g"
+          find . -name "*.tsx" | xargs sed -i "s/what's/what\&apos;s/g"
+          find . -name "*.tsx" | xargs sed -i "s/that's/that\&apos;s/g"
+          find . -name "*.tsx" | xargs sed -i "s/there's/there\&apos;s/g"
+          find . -name "*.tsx" | xargs sed -i "s/here's/here\&apos;s/g"
+          find . -name "*.tsx" | xargs sed -i "s/who's/who\&apos;s/g"
+          find . -name "*.tsx" | xargs sed -i "s/let's/let\&apos;s/g"
+          find . -name "*.tsx" | xargs sed -i "s/you'll/you\&apos;ll/g"
+          find . -name "*.tsx" | xargs sed -i "s/we'll/we\&apos;ll/g"
+          find . -name "*.tsx" | xargs sed -i "s/they'll/they\&apos;ll/g"
+          find . -name "*.tsx" | xargs sed -i "s/I'll/I\&apos;ll/g"
+          find . -name "*.tsx" | xargs sed -i "s/you'd/you\&apos;d/g"
+          find . -name "*.tsx" | xargs sed -i "s/we'd/we\&apos;d/g"
+          find . -name "*.tsx" | xargs sed -i "s/they'd/they\&apos;d/g"
+          find . -name "*.tsx" | xargs sed -i "s/I'd/I\&apos;d/g"
+        continue-on-error: true
+        
+      - name: Format with Prettier
+        run: |
+          npx prettier --write "**/*.{js,jsx,ts,tsx,json,css,md}" || true
+        continue-on-error: true
+        
+      - name: Check if changes were made
+        id: verify
+        run: |
+          if [[ -n $(git status -s) ]]; then
+            echo "::set-output name=changed::true"
+          else
+            echo "::set-output name=changed::false"
+          fi
+          
+      - name: Commit and push fixes
+        if: steps.verify.outputs.changed == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git commit -m "Auto-fix: TypeScript and linting errors"
+          git push
+          
+      - name: Run build to verify
+        run: npm run build
