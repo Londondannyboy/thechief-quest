@@ -3,6 +3,17 @@ import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { client } from '@/lib/sanity.client'
 
+interface Agency {
+  _id: string;
+  name: string;
+  slug: { current: string };
+  description: string;
+  specializations?: string[];
+  rating?: number;
+  reviewCount?: number;
+  verified?: boolean;
+}
+
 async function getAgencies() {
   const query = `*[_type == "recruitmentAgency"] | order(rating desc) {
     _id,
@@ -15,7 +26,7 @@ async function getAgencies() {
     verified
   }`
   
-  return client.fetch(query)
+  return client.fetch<Agency[]>(query)
 }
 
 export const metadata = {
