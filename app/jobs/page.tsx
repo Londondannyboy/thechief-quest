@@ -33,7 +33,7 @@ export default function JobsPage() {
                   Job Board Coming Soon
                 </h2>
                 <p className="text-lg text-gray-600 mb-6">
-                  We're building a comprehensive job board featuring Chief of Staff positions 
+                  We&apos;re building a comprehensive job board featuring Chief of Staff positions 
                   from top companies across our coverage areas.
                 </p>
                 <p className="text-gray-600 mb-8">

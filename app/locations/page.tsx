@@ -88,10 +88,10 @@ export default function LocationsPage() {
         <section className="py-16 bg-blue-600">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-bold text-white mb-4">
-              Can't Find Your Location?
+              Can&apos;t Find Your Location?
             </h2>
             <p className="text-xl text-blue-100 mb-8">
-              We're constantly expanding our coverage. Get notified when we add your city.
+              We&apos;re constantly expanding our coverage. Get notified when we add your city.
             </p>
             <Link
               href="/contact"

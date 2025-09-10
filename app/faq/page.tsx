@@ -26,14 +26,14 @@ export default async function FAQPage() {
   const faqs = await getFAQs()
   
   // Group FAQs by category
-  const groupedFAQs = faqs?.reduce((acc: any, faq: any) => {
+  const groupedFAQs = faqs?.reduce((acc: Record<string, any[]>, faq) => {
     const category = faq.category || 'general'
     if (!acc[category]) acc[category] = []
     acc[category].push(faq)
     return acc
   }, {})
 
-  const categoryLabels: any = {
+  const categoryLabels: Record<string, string> = {
     general: 'General Questions',
     career: 'Career Path',
     salary: 'Salary & Compensation',
@@ -70,13 +70,13 @@ export default async function FAQPage() {
             <div className="max-w-4xl mx-auto">
               {groupedFAQs && Object.keys(groupedFAQs).length > 0 ? (
                 <div className="space-y-12">
-                  {Object.entries(groupedFAQs).map(([category, questions]: [string, any]) => (
+                  {Object.entries(groupedFAQs).map(([category, questions]) => (
                     <div key={category}>
                       <h2 className="text-2xl font-bold text-gray-900 mb-6">
                         {categoryLabels[category] || category}
                       </h2>
                       <div className="space-y-4">
-                        {questions.map((faq: any) => (
+                        {(questions as any[]).map((faq) => (
                           <div key={faq._id} className="bg-gray-50 p-6 rounded-lg">
                             <h3 className="text-lg font-semibold text-gray-900 mb-2">
                               {faq.question}
@@ -113,7 +113,7 @@ export default async function FAQPage() {
                 Still Have Questions?
               </h2>
               <p className="text-lg text-gray-600 mb-8">
-                Can't find what you're looking for? We're here to help.
+                Can&apos;t find what you&apos;re looking for? We&apos;re here to help.
               </p>
               <Link
                 href="/contact"

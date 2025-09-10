@@ -54,7 +54,7 @@ export default async function AgenciesPage() {
             <div className="max-w-4xl mx-auto">
               {agencies && agencies.length > 0 ? (
                 <div className="space-y-6">
-                  {agencies.map((agency: any) => (
+                  {agencies.map((agency) => (
                     <div key={agency._id} className="bg-white border border-gray-200 p-6 rounded-lg hover:shadow-lg transition">
                       <div className="flex justify-between items-start mb-4">
                         <div>
