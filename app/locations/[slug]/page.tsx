@@ -9,7 +9,10 @@ interface PageProps {
 }
 
 async function getLocationContent(slug: string) {
-  const query = `*[_type == "chiefOfStaff" && location == $slug][0] {
+  // Handle both old URLs (/locations/london) and new SEO URLs (/locations/chief-of-staff-london)
+  const locationSlug = slug.replace('chief-of-staff-', '')
+  
+  const query = `*[_type == "chiefOfStaff" && location == $locationSlug && !defined(industry)][0] {
     _id,
     metaTitle,
     metaDescription,
@@ -29,7 +32,7 @@ async function getLocationContent(slug: string) {
     }
   }`
   
-  const content = await client.fetch(query, { slug })
+  const content = await client.fetch(query, { locationSlug })
   return content
 }
 
@@ -52,9 +55,10 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function LocationPage({ params }: PageProps) {
   const { slug } = await params
+  const content = await getLocationContent(slug)
   
-  // Mock data for now until Sanity is populated
-  const locationData = {
+  // Fallback to mock data if no Sanity content
+  const locationData = content || {
     london: {
       name: 'London',
       country: 'UK',
@@ -82,11 +86,25 @@ export default async function LocationPage({ params }: PageProps) {
       industries: ['Banking', 'Insurance', 'Pharmaceuticals', 'Technology'],
       topEmployers: ['UBS', 'Credit Suisse', 'Swiss Re', 'Zurich Insurance', 'Novartis'],
     },
-  }[slug]
+  }[slug.replace('chief-of-staff-', '')]
   
-  if (!locationData) {
+  if (!locationData && !content) {
     notFound()
   }
+  
+  // Use Sanity content if available
+  const pageData = content ? {
+    name: content.pageTitle?.split(' in ')[1]?.split(',')[0] || content.location,
+    country: content.region || 'UK',
+    avgSalary: content.salaryData?.average || '£150,000',
+    jobCount: content.salaryData?.jobCount || 100,
+    description: content.tldr || content.metaDescription,
+    industries: content.salaryData?.topIndustries || ['Private Equity', 'Technology'],
+    topEmployers: content.salaryData?.topEmployers || ['Top Employer 1', 'Top Employer 2'],
+    content: content.content,
+    metaTitle: content.metaTitle,
+    metaDescription: content.metaDescription
+  } : locationData
   
   return (
     <>
@@ -101,27 +119,27 @@ export default async function LocationPage({ params }: PageProps) {
                 <span className="mx-2 text-gray-400">/</span>
                 <Link href="/locations" className="text-gray-600 hover:text-gray-900">Locations</Link>
                 <span className="mx-2 text-gray-400">/</span>
-                <span className="text-gray-900">{locationData.name}</span>
+                <span className="text-gray-900">{pageData.name}</span>
               </nav>
               
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                Chief of Staff Jobs in {locationData.name}, {locationData.country}
+                {pageData.metaTitle || `Chief of Staff Jobs in ${pageData.name}, ${pageData.country}`}
               </h1>
               <p className="text-xl text-gray-600 mb-8">
-                {locationData.description}
+                {pageData.description}
               </p>
               
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
                 <div className="bg-white p-4 rounded-lg shadow-sm">
-                  <div className="text-2xl font-bold text-gray-900">{locationData.jobCount}</div>
+                  <div className="text-2xl font-bold text-gray-900">{pageData.jobCount}</div>
                   <div className="text-gray-600">Active Jobs</div>
                 </div>
                 <div className="bg-white p-4 rounded-lg shadow-sm">
-                  <div className="text-2xl font-bold text-gray-900">{locationData.avgSalary}</div>
+                  <div className="text-2xl font-bold text-gray-900">{pageData.avgSalary}</div>
                   <div className="text-gray-600">Average Salary</div>
                 </div>
                 <div className="bg-white p-4 rounded-lg shadow-sm">
-                  <div className="text-2xl font-bold text-gray-900">{locationData.industries.length}</div>
+                  <div className="text-2xl font-bold text-gray-900">{pageData.industries.length}</div>
                   <div className="text-gray-600">Key Industries</div>
                 </div>
               </div>
@@ -135,7 +153,7 @@ export default async function LocationPage({ params }: PageProps) {
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl font-bold text-gray-900 mb-8">Key Industries</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {locationData.industries.map((industry) => (
+                {pageData.industries.map((industry) => (
                   <Link
                     key={industry}
                     href={`/locations/${slug}/${industry.toLowerCase().replace(' ', '-')}`}
@@ -148,21 +166,21 @@ export default async function LocationPage({ params }: PageProps) {
               
               <h2 className="text-3xl font-bold text-gray-900 mb-8 mt-16">Top Employers</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {locationData.topEmployers.map((employer) => (
+                {pageData.topEmployers.map((employer) => (
                   <div key={employer} className="p-4 bg-gray-50 rounded-lg">
                     {employer}
                   </div>
                 ))}
               </div>
               
-              <h2 className="text-3xl font-bold text-gray-900 mb-8 mt-16">About Chief of Staff Roles in {locationData.name}</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-8 mt-16">About Chief of Staff Roles in {pageData.name}</h2>
               <div className="prose prose-lg max-w-none">
                 <p>
-                  Chief of Staff positions in {locationData.name} offer exceptional career opportunities with an average salary of {locationData.avgSalary}. 
-                  The city is home to {locationData.jobCount} active Chief of Staff positions across various industries.
+                  Chief of Staff positions in {pageData.name} offer exceptional career opportunities with an average salary of {pageData.avgSalary}. 
+                  The city is home to {pageData.jobCount} active Chief of Staff positions across various industries.
                 </p>
                 <p>
-                  The role of Chief of Staff in {locationData.name} typically involves working closely with C-suite executives to drive strategic initiatives, 
+                  The role of Chief of Staff in {pageData.name} typically involves working closely with C-suite executives to drive strategic initiatives, 
                   manage cross-functional projects, and serve as a trusted advisor to senior leadership. Professionals in these roles often come from 
                   consulting, investment banking, or operational backgrounds.
                 </p>
@@ -191,7 +209,7 @@ export default async function LocationPage({ params }: PageProps) {
         <section className="py-16 bg-blue-600">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-bold text-white mb-4">
-              Find Your Next Chief of Staff Role in {locationData.name}
+              Find Your Next Chief of Staff Role in {pageData.name}
             </h2>
             <p className="text-xl text-blue-100 mb-8">
               Get notified about new opportunities as they become available

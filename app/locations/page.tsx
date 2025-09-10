@@ -68,7 +68,7 @@ export default function LocationsPage() {
                 {cities.map((city) => (
                   <Link
                     key={city.id}
-                    href={`/locations/${city.id}`}
+                    href={`/locations/chief-of-staff-${city.id}`}
                     className="bg-white border border-gray-200 p-6 rounded-lg hover:shadow-lg transition"
                   >
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">
